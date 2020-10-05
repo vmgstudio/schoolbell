@@ -19,13 +19,13 @@
         <Label Grid.ColumnSpan="2" Content="Jelenlegi csengetés:" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top" Foreground="White" FontSize="20"/>
         <ComboBox ItemsSource="{Binding ScheduleList}" x:Name="selectSchedule" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top" Width="183" BorderBrush="#FF7A7A7A" Foreground="#FF7A7A7A" Background="#FF7A7A7A" SelectionChanged="selectSchedule_SelectionChanged" IsSynchronizedWithCurrentItem="False"/>
         <Button x:Name="addSchedule" Grid.ColumnSpan="2" Content="Új csengetés hozzáadása" HorizontalAlignment="Left" Margin="10,116,0,0" VerticalAlignment="Top" Width="183" Height="24" Background="#FF007E00" Foreground="White" Click="addSchedule_Click" FontWeight="Bold"/>
-        <DataGrid Grid.ColumnSpan="2" HorizontalAlignment="Center" Height="340" Margin="210,55,10,0" VerticalAlignment="Top" Width="547" ItemsSource="{Binding Csengetes}" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False" RowBackground="Transparent" Background="Transparent" ColumnWidth="auto" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False" CanUserResizeRows="False" >
-
+        <DataGrid x:Name="datagrid" Grid.ColumnSpan="2" HorizontalAlignment="Center" Height="340" Margin="210,55,10,0" VerticalAlignment="Top" Width="547" ItemsSource="{Binding Path=Csengetes}" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False" RowBackground="Transparent" Background="Transparent" ColumnWidth="auto" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False" CanUserResizeRows="False" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Jelző csengetés" Binding="{Binding jelzo}" Foreground="White"/>
                 <DataGridTextColumn Header="Becsengetés" Binding="{Binding becsengetes}" Foreground="White"/>
                 <DataGridTextColumn Header="Kicsengetés" Binding="{Binding kicsengetes}" Foreground="White"/>
             </DataGrid.Columns>
         </DataGrid>
+        
     </Grid>
 </Window>

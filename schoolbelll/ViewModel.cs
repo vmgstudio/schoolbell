@@ -13,6 +13,7 @@ namespace schoolbelll
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            Console.WriteLine("PropertyChanged: " + propertyName);
         }
     }
 }

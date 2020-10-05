@@ -45,7 +45,7 @@ namespace schoolbelll
         {
             InitializeComponent();
 
-            DataContext = mainwindowviewmodel;
+            this.DataContext = mainwindowviewmodel;
 
             AppEventHandler.ScheduleAdded += OnScheduleAdded;
 
@@ -137,16 +137,16 @@ namespace schoolbelll
 
             mostNeMukodjel = true; //ne triggerelődjön az eventje a lista változásnak mer nem Magdi basztatja hanem a program
 
-            mainwindowviewmodel.ScheduleList = new List<string>();
+            List<string> _schedulelist = new List<string>();
 
             foreach (XmlNode schedule in nodeList)
             {
                 string schedulename = schedule["title"].InnerText;
-
-                mainwindowviewmodel.ScheduleList.Add(schedulename);
+                _schedulelist.Add(schedulename);
 
                 Console.WriteLine("Added " + schedulename); //debug
             }
+            mainwindowviewmodel.ScheduleList = _schedulelist; //belerakja a selectlistbe
 
             selectSchedule.SelectedIndex = mainwindowviewmodel.ScheduleList.IndexOf(GetDefaultSchedule());
 
@@ -158,7 +158,7 @@ namespace schoolbelll
         {
             XmlNode root = DataFile.DocumentElement;
 
-            mainwindowviewmodel.Csengetes = new ObservableCollection<CsengetesiRend>() { };
+            ObservableCollection<CsengetesiRend> _csengetes = new ObservableCollection<CsengetesiRend>();
 
             mainwindowviewmodel.jelzocsengetesek = new List<string>();
             mainwindowviewmodel.becsengetesek = new List<string>();
@@ -167,13 +167,15 @@ namespace schoolbelll
             XmlNodeList lessons = root.SelectNodes("/root/schedule[./title[contains(text(), '" + ScheduleName + "')]]//lesson[@id]");
             foreach (XmlNode lesson in lessons)
             {
-                mainwindowviewmodel.Csengetes.Add(new CsengetesiRend() { jelzo = lesson["jelzo"].InnerText, becsengetes = lesson["becsengetes"].InnerText, kicsengetes = lesson["kicsengetes"].InnerText });
+                _csengetes.Add(new CsengetesiRend() { jelzo = lesson["jelzo"].InnerText, becsengetes = lesson["becsengetes"].InnerText, kicsengetes = lesson["kicsengetes"].InnerText });
                 
                 mainwindowviewmodel.jelzocsengetesek.Add(lesson["jelzo"].InnerText);
                 mainwindowviewmodel.becsengetesek.Add(lesson["becsengetes"].InnerText);
                 mainwindowviewmodel.kicsengetesek.Add(lesson["kicsengetes"].InnerText);
 
             }
+
+            mainwindowviewmodel.Csengetes = _csengetes;
 
             XmlNode hangok = root.SelectSingleNode("/root/schedule[./title[contains(text(), '" + ScheduleName + "')]]/sound");
             if (hangok != null)
@@ -208,15 +210,13 @@ namespace schoolbelll
 
         private void SetDefaultSchedule(string scheduleName) //megjegyzi mit állított be Magdi csengetésnek (belerakja az XMLbe)
         {
-            string selectedschedule = selectSchedule.SelectedItem.ToString();
-
             XmlNode root = DataFile.DocumentElement;
             XmlNode current = root.SelectSingleNode("/root/currentschedule");
-            current.InnerText = selectedschedule;
+            current.InnerText = scheduleName;
 
             DataFile.Save(filename); //Elmentjük a módosított XML-t. 
 
-            MessageBox.Show("Mostantól a(z) " + selectedschedule + " csengetési rend van érvényben.", "Sikeres módosítás", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Mostantól a(z) " + scheduleName + " csengetési rend van érvényben.", "Sikeres módosítás", MessageBoxButton.OK, MessageBoxImage.Information);
             
         }
 
@@ -236,7 +236,7 @@ namespace schoolbelll
         private void OnScheduleAdded(object sender, EventArgs e)
         {
             LoadDataFile(); //Írtunk az XML-be szóval betöltjük újra - frissül a DataFile változó
-            LoadScheduleList(); //Újra betöltjük a legördülő listát. DE MIÉRT LESZ RANDOM ÜRES?? MI A FASZ? UGYAN AZT CSINÁLJA MINT AMIKOR INDUL A PROGRAM
+            LoadScheduleList(); //Újra betöltjük a legördülő listát
             Console.WriteLine("OnScheduleAdded Event lefutott"); //persze hogy lefut geci de miért lesz üres az a kurva lista
         }
     }
