@@ -30,7 +30,7 @@ namespace schoolbelll
         private XmlDocument doc = new XmlDocument();
         private string filename = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "schedule.xml");
 
-        
+
 
         private string jelzohang;
         private string becsengeteshang;
@@ -41,7 +41,7 @@ namespace schoolbelll
         public MainWindow()
         {
             InitializeComponent();
-            
+
             DataContext = mainwindowviewmodel;
 
             AppEventHandler.ScheduleAdded += OnScheduleAdded;
@@ -52,16 +52,16 @@ namespace schoolbelll
             LiveTime.Start();
 
             loadSchedule();
-            
+
         }
 
         void timer_Tick(object sender, EventArgs e)
         {
             LiveTimeLabel.Content = DateTime.Now.ToString("HH:mm:ss");
-            
+
             //Console.WriteLine(DateTime.Now.ToString("HH:mm:ss"));
 
-            if(DateTime.Now.TimeOfDay.Minutes > minutes)
+            if (DateTime.Now.TimeOfDay.Minutes > minutes)
             {
                 minutes = DateTime.Now.TimeOfDay.Minutes;
 
@@ -83,8 +83,8 @@ namespace schoolbelll
                     mediaPlayer.Play();
                 }
             }
-            
-            
+
+
         }
 
         private void addSchedule_Click(object sender, RoutedEventArgs e)
@@ -92,9 +92,9 @@ namespace schoolbelll
             AddSchedule dlg = new AddSchedule();
 
             dlg.Owner = this;
-            
+
             dlg.ShowDialog();
-            
+
         }
 
         private void loadSchedule()
@@ -108,7 +108,7 @@ namespace schoolbelll
                 XmlNode root = document.DocumentElement;
 
                 nodeList = document.SelectNodes("/root/schedule");
-                
+
                 mainwindowviewmodel.ScheduleList = new List<string>();
 
                 foreach (XmlNode schedule in nodeList)
@@ -131,7 +131,8 @@ namespace schoolbelll
                 {
                     currentschedule = root.SelectSingleNode("/root/currentschedule").InnerText;
 
-                    selectSchedule.SelectedIndex = mainwindowviewmodel.ScheduleList.IndexOf(currentschedule); //ez egy szar lófaszt nem csinál
+                    
+                        selectSchedule.SelectedIndex = mainwindowviewmodel.ScheduleList.IndexOf(currentschedule); //ez egy szar lófaszt nem csinál
                     
                 }
                 catch (Exception)
@@ -204,7 +205,7 @@ namespace schoolbelll
 
                 _document.Save(filename);
 
-                loadSchedule(); //itt megint be kéne tölteni de nem működik
+                loadSchedule(); //itt megint be kéne tölteni de nem működik mert végtelen loop van gec de nem tudom hogy kell megoldani gec agyfaszt kaptam gec vááááá
 
                 Console.WriteLine("Selected Item: " + selectedschedule); //debug
 
