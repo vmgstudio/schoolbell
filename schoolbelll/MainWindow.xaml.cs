@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Media;
+using System.Collections.ObjectModel;
 
 namespace schoolbelll
 {
@@ -157,7 +158,7 @@ namespace schoolbelll
         {
             XmlNode root = DataFile.DocumentElement;
 
-            mainwindowviewmodel.Csengetes = new System.Collections.ObjectModel.ObservableCollection<CsengetesiRend>();
+            mainwindowviewmodel.Csengetes = new ObservableCollection<CsengetesiRend>() { };
 
             mainwindowviewmodel.jelzocsengetesek = new List<string>();
             mainwindowviewmodel.becsengetesek = new List<string>();
@@ -166,7 +167,7 @@ namespace schoolbelll
             XmlNodeList lessons = root.SelectNodes("/root/schedule[./title[contains(text(), '" + ScheduleName + "')]]//lesson[@id]");
             foreach (XmlNode lesson in lessons)
             {
-                mainwindowviewmodel.Csengetes.Add(new CsengetesiRend() { jelzo = "asd", becsengetes = "dsa", kicsengetes = "sad" });
+                mainwindowviewmodel.Csengetes.Add(new CsengetesiRend() { jelzo = lesson["jelzo"].InnerText, becsengetes = lesson["becsengetes"].InnerText, kicsengetes = lesson["kicsengetes"].InnerText });
                 
                 mainwindowviewmodel.jelzocsengetesek.Add(lesson["jelzo"].InnerText);
                 mainwindowviewmodel.becsengetesek.Add(lesson["becsengetes"].InnerText);
