@@ -27,14 +27,16 @@ namespace schoolbelll
 
         private MediaPlayer mediaPlayer = new MediaPlayer();
         private int minutes;
-        private XmlDocument doc = new XmlDocument();
+
         private string filename = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "schedule.xml");
 
-
+        XmlDocument DataFile;
 
         private string jelzohang;
         private string becsengeteshang;
         private string kicsengeteshang;
+
+        private bool mostNeMukodjel;
 
         MainWindowViewModel mainwindowviewmodel = new MainWindowViewModel();
 
@@ -51,15 +53,16 @@ namespace schoolbelll
             LiveTime.Tick += timer_Tick;
             LiveTime.Start();
 
-            loadSchedule();
+            LoadDataFile();
+
+            LoadScheduleList();
+            ApplySelectedSchedule(GetDefaultSchedule());
 
         }
 
         void timer_Tick(object sender, EventArgs e)
         {
             LiveTimeLabel.Content = DateTime.Now.ToString("HH:mm:ss");
-
-            //Console.WriteLine(DateTime.Now.ToString("HH:mm:ss"));
 
             if (DateTime.Now.TimeOfDay.Minutes > minutes)
             {
@@ -97,130 +100,140 @@ namespace schoolbelll
 
         }
 
-        private void loadSchedule()
+        private void LoadDataFile()
         {
-            XmlDocument document = new XmlDocument();
+            XmlDocument _document = new XmlDocument();
+
             try
             {
-                document.Load(filename);
-
-                XmlNodeList nodeList;
-                XmlNode root = document.DocumentElement;
-
-                nodeList = document.SelectNodes("/root/schedule");
-
-                mainwindowviewmodel.ScheduleList = new List<string>();
-
-                foreach (XmlNode schedule in nodeList)
-                {
-                    string schedulename = schedule["title"].InnerText;
-
-                    mainwindowviewmodel.ScheduleList.Add(schedulename);
-
-                    Console.WriteLine("Added " + schedulename); //debug
-
-
-                }
-
-
-                //-----------------előzőleg beállított csengetés
-
-                string currentschedule = "";
-
-                try
-                {
-                    currentschedule = root.SelectSingleNode("/root/currentschedule").InnerText;
-
-                    
-                        selectSchedule.SelectedIndex = mainwindowviewmodel.ScheduleList.IndexOf(currentschedule); //ez egy szar lófaszt nem csinál
-                    
-                }
-                catch (Exception)
-                {
-                    root.AppendChild(document.CreateElement("currentschedule"));
-                }
-
-
-                //----------------csengetési idők és hangok
-
-                mainwindowviewmodel.jelzocsengetesek = new List<string>();
-                mainwindowviewmodel.becsengetesek = new List<string>();
-                mainwindowviewmodel.kicsengetesek = new List<string>();
-
-                XmlNodeList lessons = root.SelectNodes("/root/schedule[./title[contains(text(), '" + currentschedule + "')]]//lesson[@id]");
-                foreach (XmlNode lesson in lessons)
-                {
-                    mainwindowviewmodel.jelzocsengetesek.Add(lesson["jelzo"].InnerText);
-                    mainwindowviewmodel.becsengetesek.Add(lesson["becsengetes"].InnerText);
-                    mainwindowviewmodel.kicsengetesek.Add(lesson["kicsengetes"].InnerText);
-
-                }
-
-                XmlNode hangok = root.SelectSingleNode("/root/schedule[./title[contains(text(), '" + currentschedule + "')]]/sound");
-                if (hangok != null)
-                {
-                    jelzohang = hangok["jelzo"].InnerText;
-                    becsengeteshang = hangok["becsengetes"].InnerText;
-                    kicsengeteshang = hangok["kicsengetes"].InnerText;
-                }
-
-                Console.WriteLine("Csengetés betöltve");
-
+                _document.Load(filename);
+                DataFile = _document;
+                Console.WriteLine("DataFile betöltve.");
             }
             catch (System.IO.FileNotFoundException)
             {
-                XmlDeclaration xmlDeclaration = document.CreateXmlDeclaration("1.0", "UTF-8", null);
-                XmlElement root = document.DocumentElement;
-                document.InsertBefore(xmlDeclaration, root);
+                XmlDeclaration xmlDeclaration = _document.CreateXmlDeclaration("1.0", "UTF-8", null);
+                XmlElement root = _document.DocumentElement;
+                _document.InsertBefore(xmlDeclaration, root);
 
-                XmlElement body = document.CreateElement(string.Empty, "root", string.Empty);
-                document.AppendChild(body);
+                XmlElement body = _document.CreateElement(string.Empty, "root", string.Empty);
+                _document.AppendChild(body);
 
-                XmlElement currentschedule = document.CreateElement("currentschedule");
+                XmlElement currentschedule = _document.CreateElement("currentschedule");
                 body.AppendChild(currentschedule);
 
-                document.Save(filename);
-
+                _document.Save(filename);
+                DataFile = _document;
+                Console.WriteLine("DataFile Létrehozva, betöltve.");
             }
 
 
         }
 
 
-        private void selectSchedule_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void LoadScheduleList()
         {
-            XmlDocument _document = new XmlDocument();
-            _document.Load(filename);
+            XmlNodeList nodeList;
 
-            //string selectedschedule = "";
-            if (selectSchedule.SelectedItem != null)
+            nodeList = DataFile.SelectNodes("/root/schedule");
+
+            mostNeMukodjel = true;
+
+            mainwindowviewmodel.ScheduleList = new List<string>();
+
+            foreach (XmlNode schedule in nodeList)
             {
-                string selectedschedule = selectSchedule.SelectedItem.ToString();
+                string schedulename = schedule["title"].InnerText;
 
-                XmlNode root = _document.DocumentElement;
-                XmlNode current = root.SelectSingleNode("/root/currentschedule");
-                current.InnerText = selectedschedule;
+                mainwindowviewmodel.ScheduleList.Add(schedulename);
 
+                Console.WriteLine("Added " + schedulename); //debug
+            }
 
+            selectSchedule.SelectedIndex = mainwindowviewmodel.ScheduleList.IndexOf(GetDefaultSchedule());
 
-                _document.Save(filename);
-
-                loadSchedule(); //itt megint be kéne tölteni de nem működik mert végtelen loop van gec de nem tudom hogy kell megoldani gec agyfaszt kaptam gec vááááá
-
-                Console.WriteLine("Selected Item: " + selectedschedule); //debug
+            mostNeMukodjel = false;
+        }
 
 
-                MessageBox.Show("Mostantól a(z) " + selectedschedule + " csengetési rend van érvényben.", "Sikeres módosítás", MessageBoxButton.OK, MessageBoxImage.Information);
+        private void ApplySelectedSchedule(string ScheduleName) //beállít egy megadott nevű csengetést
+        {
+            XmlNode root = DataFile.DocumentElement;
+
+            mainwindowviewmodel.jelzocsengetesek = new List<string>();
+            mainwindowviewmodel.becsengetesek = new List<string>();
+            mainwindowviewmodel.kicsengetesek = new List<string>();
+
+            XmlNodeList lessons = root.SelectNodes("/root/schedule[./title[contains(text(), '" + ScheduleName + "')]]//lesson[@id]");
+            foreach (XmlNode lesson in lessons)
+            {
+                mainwindowviewmodel.jelzocsengetesek.Add(lesson["jelzo"].InnerText);
+                mainwindowviewmodel.becsengetesek.Add(lesson["becsengetes"].InnerText);
+                mainwindowviewmodel.kicsengetesek.Add(lesson["kicsengetes"].InnerText);
 
             }
 
+            XmlNode hangok = root.SelectSingleNode("/root/schedule[./title[contains(text(), '" + ScheduleName + "')]]/sound");
+            if (hangok != null)
+            {
+                jelzohang = hangok["jelzo"].InnerText;
+                becsengeteshang = hangok["becsengetes"].InnerText;
+                kicsengeteshang = hangok["kicsengetes"].InnerText;
+            }
+
+            Console.WriteLine(ScheduleName + " nevű csengetés aktiválva.");
+
+        }
+
+        private string GetDefaultSchedule()
+        {
+            string currentschedule = "";
+
+            XmlNode root = DataFile.DocumentElement;
+
+            try
+            {
+                currentschedule = root.SelectSingleNode("/root/currentschedule").InnerText;
+
+            }
+            catch (Exception)
+            {
+                root.AppendChild(DataFile.CreateElement("currentschedule"));
+            }
+
+            return currentschedule;
+        }
+
+        private void SetDefaultSchedule(string scheduleName)
+        {
+            string selectedschedule = selectSchedule.SelectedItem.ToString();
+
+            XmlNode root = DataFile.DocumentElement;
+            XmlNode current = root.SelectSingleNode("/root/currentschedule");
+            current.InnerText = selectedschedule;
+
+            DataFile.Save(filename); //Elmentjük a módosított XML-t. 
+
+            MessageBox.Show("Mostantól a(z) " + selectedschedule + " csengetési rend van érvényben.", "Sikeres módosítás", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void selectSchedule_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            if (selectSchedule.SelectedItem != null && !mostNeMukodjel)
+            {
+                SetDefaultSchedule(selectSchedule.SelectedItem.ToString()); //Fájlba menjük az új csengetést
+
+                ApplySelectedSchedule(GetDefaultSchedule()); //Betöltjük a kiválasztott csengetést.
+            }
         }
 
 
         private void OnScheduleAdded(object sender, EventArgs e)
         {
-            loadSchedule(); //idk ez jó e xd            igen ez jóó mester
-            Console.WriteLine("loading újra ");
+            LoadDataFile(); //Írtunk az XML-be szóval betöltjük újra.
+            LoadScheduleList(); //Újra betöltjük a legördülő listát. DE MIÉRT LESZ ÜRES??
+            Console.WriteLine("OnScheduleAdded Event lefutott");
         }
     }
 }
