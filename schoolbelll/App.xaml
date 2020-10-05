@@ -1,0 +1,8 @@
+﻿<Application x:Class="schoolbelll.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:schoolbelll" >
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>

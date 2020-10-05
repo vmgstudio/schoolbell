@@ -1,0 +1,20 @@
+﻿<Window x:Class="schoolbelll.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:schoolbelll"
+        mc:Ignorable="d"
+        Title="Csengető" Height="450" Width="800" Background="#FF2B2B2B" Icon="csengo.png">
+    <Grid HorizontalAlignment="Left" Height="405" Margin="10,10,0,0" VerticalAlignment="Top" Width="767">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Pontos idő:" HorizontalAlignment="Left" Margin="240,0,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" FontSize="26" FontWeight="Bold" Foreground="White"/>
+        <Label Name="LiveTimeLabel" Content="%TIME%" HorizontalAlignment="Left" Margin="393,0,0,0" VerticalAlignment="Top" Height="45" Width="120" FontSize="26" FontWeight="Bold" Foreground="White" Grid.ColumnSpan="2" />
+        <Label Grid.ColumnSpan="2" Content="Jelenlegi csengetés:" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top" Foreground="White" FontSize="20"/>
+        <ComboBox ItemsSource="{Binding ScheduleList}" x:Name="selectSchedule" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top" Width="183" BorderBrush="#FF7A7A7A" Foreground="#FF7A7A7A" Background="#FF7A7A7A" SelectionChanged="selectSchedule_SelectionChanged" IsSynchronizedWithCurrentItem="False"/>
+        <Button x:Name="addSchedule" Grid.ColumnSpan="2" Content="Új csengetés hozzáadása" HorizontalAlignment="Left" Margin="10,116,0,0" VerticalAlignment="Top" Width="183" Height="24" Background="#FF007E00" Foreground="White" Click="addSchedule_Click" FontWeight="Bold"/>
+    </Grid>
+</Window>
