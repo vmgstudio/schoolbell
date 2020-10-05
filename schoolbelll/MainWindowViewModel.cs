@@ -7,29 +7,26 @@ using System.Threading.Tasks;
 
 namespace schoolbelll
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel : ViewModel
     {
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private List<string> scheduleList;
+        private List<string> _scheduleList;
         
 
         public MainWindowViewModel()
         {
-            scheduleList = new List<string>();
+            _scheduleList = new List<string>();
             
         }
 
         public List<string> ScheduleList 
         {
-            get { return scheduleList; }
+            get { return _scheduleList; }
             set
             {
-                if (scheduleList != value)
+                if (_scheduleList != value)
                 {
-                    scheduleList = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
+                    _scheduleList = value;
+                    OnPropertyChanged("ScheduleList");
                 }
             }
         }

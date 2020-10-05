@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:schoolbelll"
         mc:Ignorable="d"
         Title="Csengető" Height="450" Width="800" Background="#FF2B2B2B" Icon="csengo.png">
+    <Window.Resources>
+        <local:MainWindowViewModel x:Key="ViewModel"/>  
+    </Window.Resources>
     <Grid HorizontalAlignment="Left" Height="405" Margin="10,10,0,0" VerticalAlignment="Top" Width="767">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>
