@@ -30,9 +30,7 @@ namespace schoolbelll
         private XmlDocument doc = new XmlDocument();
         private string filename = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "schedule.xml");
 
-        private List<string> jelzocsengetesek;
-        private List<string> becsengetesek;
-        private List<string> kicsengetesek;
+        
 
         private string jelzohang;
         private string becsengeteshang;
@@ -67,19 +65,19 @@ namespace schoolbelll
             {
                 minutes = DateTime.Now.TimeOfDay.Minutes;
 
-                if (jelzocsengetesek.Contains(DateTime.Now.ToString("HH:mm")))
+                if (mainwindowviewmodel.jelzocsengetesek.Contains(DateTime.Now.ToString("HH:mm")))
                 {
                     mediaPlayer.Open(new Uri(jelzohang));
                     mediaPlayer.Play();
                 }
 
-                if (becsengetesek.Contains(DateTime.Now.ToString("HH:mm")))
+                if (mainwindowviewmodel.becsengetesek.Contains(DateTime.Now.ToString("HH:mm")))
                 {
                     mediaPlayer.Open(new Uri(becsengeteshang));
                     mediaPlayer.Play();
                 }
 
-                if (kicsengetesek.Contains(DateTime.Now.ToString("HH:mm")))
+                if (mainwindowviewmodel.kicsengetesek.Contains(DateTime.Now.ToString("HH:mm")))
                 {
                     mediaPlayer.Open(new Uri(kicsengeteshang));
                     mediaPlayer.Play();
@@ -133,7 +131,7 @@ namespace schoolbelll
                 {
                     currentschedule = root.SelectSingleNode("/root/currentschedule").InnerText;
 
-                    selectSchedule.SelectedIndex = selectSchedule.Items.IndexOf(currentschedule); //ez egy szar lófaszt nem csinál
+                    selectSchedule.SelectedIndex = mainwindowviewmodel.ScheduleList.IndexOf(currentschedule); //ez egy szar lófaszt nem csinál
                     
                 }
                 catch (Exception)
@@ -144,16 +142,16 @@ namespace schoolbelll
 
                 //----------------csengetési idők és hangok
 
-                jelzocsengetesek = new List<string>();
-                becsengetesek = new List<string>();
-                kicsengetesek = new List<string>();
+                mainwindowviewmodel.jelzocsengetesek = new List<string>();
+                mainwindowviewmodel.becsengetesek = new List<string>();
+                mainwindowviewmodel.kicsengetesek = new List<string>();
 
                 XmlNodeList lessons = root.SelectNodes("/root/schedule[./title[contains(text(), '" + currentschedule + "')]]//lesson[@id]");
                 foreach (XmlNode lesson in lessons)
                 {
-                    jelzocsengetesek.Add(lesson["jelzo"].InnerText);
-                    becsengetesek.Add(lesson["becsengetes"].InnerText);
-                    kicsengetesek.Add(lesson["kicsengetes"].InnerText);
+                    mainwindowviewmodel.jelzocsengetesek.Add(lesson["jelzo"].InnerText);
+                    mainwindowviewmodel.becsengetesek.Add(lesson["becsengetes"].InnerText);
+                    mainwindowviewmodel.kicsengetesek.Add(lesson["kicsengetes"].InnerText);
 
                 }
 
@@ -190,23 +188,23 @@ namespace schoolbelll
 
         private void selectSchedule_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            XmlDocument document = new XmlDocument();
-            document.Load(filename);
+            XmlDocument _document = new XmlDocument();
+            _document.Load(filename);
 
             //string selectedschedule = "";
             if (selectSchedule.SelectedItem != null)
             {
                 string selectedschedule = selectSchedule.SelectedItem.ToString();
 
-                XmlNode root = document.DocumentElement;
+                XmlNode root = _document.DocumentElement;
                 XmlNode current = root.SelectSingleNode("/root/currentschedule");
                 current.InnerText = selectedschedule;
 
 
 
-                document.Save(filename);
+                _document.Save(filename);
 
-                //loadSchedule(); //itt megint be kéne tölteni de nem működik
+                loadSchedule(); //itt megint be kéne tölteni de nem működik
 
                 Console.WriteLine("Selected Item: " + selectedschedule); //debug
 
@@ -220,7 +218,7 @@ namespace schoolbelll
 
         private void OnScheduleAdded(object sender, EventArgs e)
         {
-            loadSchedule(); //idk ez jó e xd
+            loadSchedule(); //idk ez jó e xd            igen ez jóó mester
             Console.WriteLine("loading újra ");
         }
     }

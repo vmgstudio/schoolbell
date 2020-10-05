@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Csengető" Height="450" Width="800" Background="#FF2B2B2B" Icon="csengo.png">
     <Window.Resources>
-        <local:MainWindowViewModel x:Key="ViewModel"/>  
+        <local:MainWindowViewModel x:Key="ViewModel"/>
     </Window.Resources>
     <Grid HorizontalAlignment="Left" Height="405" Margin="10,10,0,0" VerticalAlignment="Top" Width="767">
         <Grid.ColumnDefinitions>
@@ -19,5 +19,26 @@
         <Label Grid.ColumnSpan="2" Content="Jelenlegi csengetés:" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top" Foreground="White" FontSize="20"/>
         <ComboBox ItemsSource="{Binding ScheduleList}" x:Name="selectSchedule" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top" Width="183" BorderBrush="#FF7A7A7A" Foreground="#FF7A7A7A" Background="#FF7A7A7A" SelectionChanged="selectSchedule_SelectionChanged" IsSynchronizedWithCurrentItem="False"/>
         <Button x:Name="addSchedule" Grid.ColumnSpan="2" Content="Új csengetés hozzáadása" HorizontalAlignment="Left" Margin="10,116,0,0" VerticalAlignment="Top" Width="183" Height="24" Background="#FF007E00" Foreground="White" Click="addSchedule_Click" FontWeight="Bold"/>
+        <ListView Grid.ColumnSpan="2" ItemsSource="{Binding jelzocsengetesek}" HorizontalAlignment="Left" Height="350" Margin="217,50,0,0" VerticalAlignment="Top" Width="132">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView Grid.ColumnSpan="2" ItemsSource="{Binding becsengetesek}" HorizontalAlignment="Left" Height="350" Margin="354,50,0,0" VerticalAlignment="Top" Width="132">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView Grid.ColumnSpan="2" ItemsSource="{Binding kicsengetesek}" HorizontalAlignment="Left" Height="350" Margin="491,50,0,0" VerticalAlignment="Top" Width="132">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>
