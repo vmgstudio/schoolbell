@@ -155,7 +155,6 @@ namespace schoolbelll
             mostNeMukodjel = false;
         }
 
-
         private void ApplySelectedSchedule(string ScheduleName) //beállít egy megadott nevű csengetést
         {
             XmlNode root = DataFile.DocumentElement;
