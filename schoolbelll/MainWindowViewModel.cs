@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,8 @@ namespace schoolbelll
         private List<string> _jelzocsengetesek;
         private List<string> _becsengetesek;
         private List<string> _kicsengetesek;
+        private ObservableCollection<CsengetesiRend> _csengetes;
+
         public List<string> jelzocsengetesek
         {
             get { return _jelzocsengetesek; }
@@ -44,7 +47,7 @@ namespace schoolbelll
 
         public MainWindowViewModel()
         {
-            _scheduleList = new List<string>();
+           // _scheduleList = new List<string>();
 
         }
 
@@ -61,6 +64,31 @@ namespace schoolbelll
             }
         }
 
+        public ObservableCollection<CsengetesiRend> Csengetes
+        {
+            get { return _csengetes; }
+            set
+            {
+                if (_csengetes != value)
+                {
+                    _csengetes = value;
+                    OnPropertyChanged("CsengetesiRend");
+                }
+            }
+        }
 
+
+    }
+
+    public class CsengetesiRend
+    {
+        public string jelzo { get; set; }
+        public string becsengetes { get; set; }
+        public string kicsengetes { get; set; }
+
+        public CsengetesiRend()
+        {
+        
+        }
     }
 }

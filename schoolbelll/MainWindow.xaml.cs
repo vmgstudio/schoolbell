@@ -54,7 +54,6 @@ namespace schoolbelll
             LiveTime.Start();
 
             LoadDataFile();
-
             LoadScheduleList();
             ApplySelectedSchedule(GetDefaultSchedule());
 
@@ -100,7 +99,7 @@ namespace schoolbelll
 
         }
 
-        private void LoadDataFile()
+        private void LoadDataFile() //betölti a legfrissebb XML-t a DataFile public változóba
         {
             XmlDocument _document = new XmlDocument();
 
@@ -126,18 +125,16 @@ namespace schoolbelll
                 DataFile = _document;
                 Console.WriteLine("DataFile Létrehozva, betöltve.");
             }
-
-
         }
 
 
-        private void LoadScheduleList()
+        private void LoadScheduleList() //betölti a select listába az elemeket a DataFile XML-ből
         {
             XmlNodeList nodeList;
 
             nodeList = DataFile.SelectNodes("/root/schedule");
 
-            mostNeMukodjel = true;
+            mostNeMukodjel = true; //ne triggerelődjön az eventje a lista változásnak mer nem Magdi basztatja hanem a program
 
             mainwindowviewmodel.ScheduleList = new List<string>();
 
@@ -156,9 +153,11 @@ namespace schoolbelll
             mostNeMukodjel = false;
         }
 
-        private void ApplySelectedSchedule(string ScheduleName) //beállít egy megadott nevű csengetést
+        private void ApplySelectedSchedule(string ScheduleName) //aktiválja a megadott nevű csengetést
         {
             XmlNode root = DataFile.DocumentElement;
+
+            mainwindowviewmodel.Csengetes = new System.Collections.ObjectModel.ObservableCollection<CsengetesiRend>();
 
             mainwindowviewmodel.jelzocsengetesek = new List<string>();
             mainwindowviewmodel.becsengetesek = new List<string>();
@@ -167,6 +166,8 @@ namespace schoolbelll
             XmlNodeList lessons = root.SelectNodes("/root/schedule[./title[contains(text(), '" + ScheduleName + "')]]//lesson[@id]");
             foreach (XmlNode lesson in lessons)
             {
+                mainwindowviewmodel.Csengetes.Add(new CsengetesiRend() { jelzo = "asd", becsengetes = "dsa", kicsengetes = "sad" });
+                
                 mainwindowviewmodel.jelzocsengetesek.Add(lesson["jelzo"].InnerText);
                 mainwindowviewmodel.becsengetesek.Add(lesson["becsengetes"].InnerText);
                 mainwindowviewmodel.kicsengetesek.Add(lesson["kicsengetes"].InnerText);
@@ -185,7 +186,7 @@ namespace schoolbelll
 
         }
 
-        private string GetDefaultSchedule()
+        private string GetDefaultSchedule() //lekéri az előzőleg Magdi által beállított csengetést
         {
             string currentschedule = "";
 
@@ -204,7 +205,7 @@ namespace schoolbelll
             return currentschedule;
         }
 
-        private void SetDefaultSchedule(string scheduleName)
+        private void SetDefaultSchedule(string scheduleName) //megjegyzi mit állított be Magdi csengetésnek (belerakja az XMLbe)
         {
             string selectedschedule = selectSchedule.SelectedItem.ToString();
 
@@ -215,9 +216,11 @@ namespace schoolbelll
             DataFile.Save(filename); //Elmentjük a módosított XML-t. 
 
             MessageBox.Show("Mostantól a(z) " + selectedschedule + " csengetési rend van érvényben.", "Sikeres módosítás", MessageBoxButton.OK, MessageBoxImage.Information);
+            
         }
 
-        private void selectSchedule_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+        private void selectSchedule_SelectionChanged(object sender, SelectionChangedEventArgs e) //ez az event mi a faszért fut le az elején?
         {
 
             if (selectSchedule.SelectedItem != null && !mostNeMukodjel)
@@ -231,9 +234,9 @@ namespace schoolbelll
 
         private void OnScheduleAdded(object sender, EventArgs e)
         {
-            LoadDataFile(); //Írtunk az XML-be szóval betöltjük újra.
-            LoadScheduleList(); //Újra betöltjük a legördülő listát. DE MIÉRT LESZ RANDOM ÜRES??
-            Console.WriteLine("OnScheduleAdded Event lefutott");
+            LoadDataFile(); //Írtunk az XML-be szóval betöltjük újra - frissül a DataFile változó
+            LoadScheduleList(); //Újra betöltjük a legördülő listát. DE MIÉRT LESZ RANDOM ÜRES?? MI A FASZ? UGYAN AZT CSINÁLJA MINT AMIKOR INDUL A PROGRAM
+            Console.WriteLine("OnScheduleAdded Event lefutott"); //persze hogy lefut geci de miért lesz üres az a kurva lista
         }
     }
 }
