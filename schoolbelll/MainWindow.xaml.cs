@@ -36,7 +36,7 @@ namespace schoolbelll
         private string becsengeteshang;
         private string kicsengeteshang;
 
-        private bool mostNeMukodjel;
+        private bool mostNeMukodjel = false;
 
         MainWindowViewModel mainwindowviewmodel = new MainWindowViewModel();
 
@@ -152,6 +152,7 @@ namespace schoolbelll
 
             selectSchedule.SelectedIndex = mainwindowviewmodel.ScheduleList.IndexOf(GetDefaultSchedule());
 
+            Console.WriteLine("Összes csengetés hozzáadva a listához. Összesen: "+ selectSchedule.Items.Count);
             mostNeMukodjel = false;
         }
 
@@ -231,7 +232,7 @@ namespace schoolbelll
         private void OnScheduleAdded(object sender, EventArgs e)
         {
             LoadDataFile(); //Írtunk az XML-be szóval betöltjük újra.
-            LoadScheduleList(); //Újra betöltjük a legördülő listát. DE MIÉRT LESZ ÜRES??
+            LoadScheduleList(); //Újra betöltjük a legördülő listát. DE MIÉRT LESZ RANDOM ÜRES??
             Console.WriteLine("OnScheduleAdded Event lefutott");
         }
     }
