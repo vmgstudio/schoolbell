@@ -15,6 +15,7 @@ namespace schoolbelll
         private List<string> _becsengetesek;
         private List<string> _kicsengetesek;
         private ObservableCollection<CsengetesiRend> _csengetes;
+        private bool _IsScheduleDisabled = false;
 
         public List<string> jelzocsengetesek
         {
@@ -44,6 +45,15 @@ namespace schoolbelll
             }
         }
 
+        public bool IsScheduleDisabled
+        {
+            get { return _IsScheduleDisabled; }
+            set
+            {
+                _IsScheduleDisabled = value;
+                OnPropertyChanged("IsScheduleDisabled");
+            }
+        }
 
         public MainWindowViewModel()
         {

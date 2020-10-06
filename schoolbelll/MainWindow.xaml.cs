@@ -68,23 +68,27 @@ namespace schoolbelll
             {
                 minutes = DateTime.Now.TimeOfDay.Minutes;
 
-                if (mainwindowviewmodel.jelzocsengetesek.Contains(DateTime.Now.ToString("HH:mm")))
+                if (!mainwindowviewmodel.IsScheduleDisabled)
                 {
-                    mediaPlayer.Open(new Uri(jelzohang));
-                    mediaPlayer.Play();
-                }
+                    if (mainwindowviewmodel.jelzocsengetesek.Contains(DateTime.Now.ToString("HH:mm")))
+                    {
+                        mediaPlayer.Open(new Uri(jelzohang));
+                        mediaPlayer.Play();
+                    }
 
-                if (mainwindowviewmodel.becsengetesek.Contains(DateTime.Now.ToString("HH:mm")))
-                {
-                    mediaPlayer.Open(new Uri(becsengeteshang));
-                    mediaPlayer.Play();
-                }
+                    if (mainwindowviewmodel.becsengetesek.Contains(DateTime.Now.ToString("HH:mm")))
+                    {
+                        mediaPlayer.Open(new Uri(becsengeteshang));
+                        mediaPlayer.Play();
+                    }
 
-                if (mainwindowviewmodel.kicsengetesek.Contains(DateTime.Now.ToString("HH:mm")))
-                {
-                    mediaPlayer.Open(new Uri(kicsengeteshang));
-                    mediaPlayer.Play();
+                    if (mainwindowviewmodel.kicsengetesek.Contains(DateTime.Now.ToString("HH:mm")))
+                    {
+                        mediaPlayer.Open(new Uri(kicsengeteshang));
+                        mediaPlayer.Play();
+                    }
                 }
+               
             }
 
 
@@ -266,6 +270,11 @@ namespace schoolbelll
                 LoadScheduleList();
                 ApplySelectedSchedule(GetDefaultSchedule());
             }
+        }
+
+        private void StopBtn_Click(object sender, RoutedEventArgs e)
+        {
+            mainwindowviewmodel.IsScheduleDisabled = !mainwindowviewmodel.IsScheduleDisabled;
         }
     }
 }
