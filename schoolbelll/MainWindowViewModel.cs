@@ -72,7 +72,11 @@ namespace schoolbelll
                 if (_csengetes != value)
                 {
                     _csengetes = value;
-                    OnPropertyChanged("CsengetesiRend");
+                    OnPropertyChanged("Csengetes");
+                    OnPropertyChanged("jelzo");
+                    OnPropertyChanged("becsengetes");
+                    OnPropertyChanged("kicsengetes");
+
                 }
             }
         }
