@@ -150,7 +150,7 @@ namespace schoolbelll
 
             selectSchedule.SelectedIndex = mainwindowviewmodel.ScheduleList.IndexOf(GetDefaultSchedule());
 
-            Console.WriteLine("Összes csengetés hozzáadva a listához. Összesen: "+ selectSchedule.Items.Count);
+            Console.WriteLine("Összes csengetés hozzáadva a listához. Összesen: " + selectSchedule.Items.Count);
             mostNeMukodjel = false;
         }
 
@@ -168,7 +168,7 @@ namespace schoolbelll
             foreach (XmlNode lesson in lessons)
             {
                 _csengetes.Add(new CsengetesiRend() { jelzo = lesson["jelzo"].InnerText, becsengetes = lesson["becsengetes"].InnerText, kicsengetes = lesson["kicsengetes"].InnerText });
-                
+
                 mainwindowviewmodel.jelzocsengetesek.Add(lesson["jelzo"].InnerText);
                 mainwindowviewmodel.becsengetesek.Add(lesson["becsengetes"].InnerText);
                 mainwindowviewmodel.kicsengetesek.Add(lesson["kicsengetes"].InnerText);
@@ -217,7 +217,7 @@ namespace schoolbelll
             DataFile.Save(filename); //Elmentjük a módosított XML-t. 
 
             MessageBox.Show("Mostantól a(z) " + scheduleName + " csengetési rend van érvényben.", "Sikeres módosítás", MessageBoxButton.OK, MessageBoxImage.Information);
-            
+
         }
 
 
@@ -238,6 +238,25 @@ namespace schoolbelll
             LoadDataFile(); //Írtunk az XML-be szóval betöltjük újra - frissül a DataFile változó
             LoadScheduleList(); //Újra betöltjük a legördülő listát
             Console.WriteLine("OnScheduleAdded Event lefutott"); //persze hogy lefut geci de miért lesz üres az a kurva lista
+        }
+
+        private void deleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Biztosan ki akarod törölni?", "Megerősítés szükséges", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
+            {
+                XmlNode root = DataFile.DocumentElement;
+                XmlNode schedule = root.SelectSingleNode("/root/schedule[./title[contains(text(), '" + GetDefaultSchedule() + "')]]");
+                root.RemoveChild(schedule);
+                DataFile.Save(filename);
+
+                schedule = root.SelectSingleNode("/root/schedule[0]/title");
+
+                Console.WriteLine(schedule.InnerText);
+
+
+      
+            }
         }
     }
 }
