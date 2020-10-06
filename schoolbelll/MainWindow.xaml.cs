@@ -252,10 +252,19 @@ namespace schoolbelll
 
                 schedule = root.SelectSingleNode("/root/schedule[0]/title");
 
-                Console.WriteLine(schedule.InnerText);
 
+                if(schedule != null)
+                {
+                    SetDefaultSchedule(schedule.InnerText);
+                    ApplySelectedSchedule(schedule.InnerText);
+                }
+                else
+                {
+                    MessageBox.Show("Nem található másik betölthető csengetési rend.", "Hiba", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
 
-      
+                LoadScheduleList();
+                ApplySelectedSchedule(GetDefaultSchedule());
             }
         }
     }
