@@ -54,7 +54,6 @@ E:\schoolbellgit\schoolbelll\obj\Debug\schoolbelll.pdb
 C:\Users\vmgst\Source\Repos\schoolbell\schoolbelll\bin\Debug\schoolbelll.exe.config
 C:\Users\vmgst\Source\Repos\schoolbell\schoolbelll\bin\Debug\schoolbelll.exe
 C:\Users\vmgst\Source\Repos\schoolbell\schoolbelll\bin\Debug\schoolbelll.pdb
-C:\Users\vmgst\Source\Repos\schoolbell\schoolbelll\obj\Debug\schoolbelll.csprojAssemblyReference.cache
 C:\Users\vmgst\Source\Repos\schoolbell\schoolbelll\obj\Debug\AddSchedule.g.cs
 C:\Users\vmgst\Source\Repos\schoolbell\schoolbelll\obj\Debug\MainWindow.g.cs
 C:\Users\vmgst\Source\Repos\schoolbell\schoolbelll\obj\Debug\App.g.cs
@@ -69,3 +68,4 @@ C:\Users\vmgst\Source\Repos\schoolbell\schoolbelll\obj\Debug\schoolbelll.csproj.
 C:\Users\vmgst\Source\Repos\schoolbell\schoolbelll\obj\Debug\schoolbelll.csproj.CoreCompileInputs.cache
 C:\Users\vmgst\Source\Repos\schoolbell\schoolbelll\obj\Debug\schoolbelll.exe
 C:\Users\vmgst\Source\Repos\schoolbell\schoolbelll\obj\Debug\schoolbelll.pdb
+C:\Users\vmgst\Source\Repos\schoolbell\schoolbelll\obj\Debug\schoolbelll.csprojAssemblyReference.cache

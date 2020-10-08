@@ -18,7 +18,11 @@ namespace schoolbelll
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            if (SingleInstance.AlreadyRunning())
+                App.Current.Shutdown(); // Just shutdown the current application,if any instance found.  
+
             base.OnStartup(e);
+
             MainWindow = new MainWindow();
             MainWindow.Closing += MainWindow_Closing;
 
