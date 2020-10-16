@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:schoolbelll"
         mc:Ignorable="d"
-        Title="Csengető" Height="450" Width="800" Background="#FF2B2B2B" Icon="csengo.png">
+        Title="Csengető" Height="450" Width="800" Background="#FF2B2B2B" Icon="csengo.png" ResizeMode="NoResize">
     <Window.Resources>
         <local:MainWindowViewModel x:Key="ViewModel"/>
         <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
-        </Window.Resources>
+    </Window.Resources>
     <Grid HorizontalAlignment="Left" Height="405" Margin="10,10,0,0" VerticalAlignment="Top" Width="767">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>
@@ -18,8 +18,8 @@
         <Label Content="Pontos idő:" HorizontalAlignment="Left" Margin="240,0,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" FontSize="26" FontWeight="Bold" Foreground="White"/>
         <Label Name="LiveTimeLabel" Content="%TIME%" HorizontalAlignment="Left" Margin="393,0,0,0" VerticalAlignment="Top" Height="45" Width="120" FontSize="26" FontWeight="Bold" Foreground="White" Grid.ColumnSpan="2" />
         <Label Grid.ColumnSpan="2" Content="Jelenlegi csengetés:" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top" Foreground="White" FontSize="20"/>
-        <ComboBox ItemsSource="{Binding ScheduleList}"  x:Name="selectSchedule" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top" Width="268" BorderBrush="#FF333333" Foreground="#FF333333" Background="#FF333333" SelectionChanged="selectSchedule_SelectionChanged" IsSynchronizedWithCurrentItem="False" Height="33"/>
-        <Button x:Name="addSchedule" Grid.ColumnSpan="2" Content="Új csengetés hozzáadása" HorizontalAlignment="Left" Margin="10,121,0,0" VerticalAlignment="Top" Width="207" Height="31" Background="#FF007E00" Foreground="White" Click="addSchedule_Click" FontWeight="Bold"/>
+        <ComboBox ItemsSource="{Binding ScheduleList}"  x:Name="selectSchedule" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top" Width="268" BorderBrush="#FF333333" Foreground="#FF333333" Background="#FF333333" SelectionChanged="selectSchedule_SelectionChanged" IsSynchronizedWithCurrentItem="False" Height="33" VerticalContentAlignment="Center"/>
+        <Button x:Name="addSchedule" Grid.ColumnSpan="2" Content="Új csengetés hozzáadása" HorizontalAlignment="Left" Margin="10,121,0,0" VerticalAlignment="Top" Width="207" Height="31" Background="#FF007E00" Foreground="White" Click="addSchedule_Click" FontWeight="Bold" BorderThickness="2,1,1,1"/>
         <DataGrid x:Name="datagrid" Grid.ColumnSpan="2" HorizontalAlignment="Center" Height="340" Margin="352,55,10,0" VerticalAlignment="Top" Width="405" ItemsSource="{Binding Path=Csengetes}" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False" RowBackground="Transparent" Background="Transparent" ColumnWidth="auto" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False" CanUserResizeRows="False" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Jelző csengetés" Binding="{Binding jelzo}" Foreground="White"/>
@@ -30,6 +30,7 @@
         <Button x:Name="deleteBtn" Grid.ColumnSpan="2" Content="Töröl" HorizontalAlignment="Left" Margin="286,83,0,0" VerticalAlignment="Top" Width="46" RenderTransformOrigin="0.201,0.454" Height="33" Foreground="White" Background="Red" Click="deleteBtn_Click"/>
         <Button x:Name="StopBtn" Grid.ColumnSpan="2" Content="Szünet" HorizontalAlignment="Left" Margin="228,121,0,0" VerticalAlignment="Top" Width="104" Height="31" Background="#FFFFC500" Click="StopBtn_Click"/>
         <Label x:Name="stopLabel" Visibility="{Binding IsScheduleDisabled, Converter={StaticResource BoolToVisConverter} }" Grid.ColumnSpan="2" Content="CSENGETÉS SZÜNETEL!" HorizontalContentAlignment="Center"  HorizontalAlignment="Left" Margin="10,172,0,0" VerticalAlignment="Top" Height="42" Width="322" Foreground="Red" FontSize="25" FontWeight="Bold"/>
+        <Label Grid.ColumnSpan="2" Content="Verzió: 1.0.13. © 2020. Harkai Balázs, Bán Szilárd" HorizontalAlignment="Left" Margin="10,369,0,0" VerticalAlignment="Top" Foreground="#FF686868" Width="322"/>
 
     </Grid>
 </Window>

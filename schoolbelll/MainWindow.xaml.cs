@@ -64,7 +64,7 @@ namespace schoolbelll
         {
             LiveTimeLabel.Content = DateTime.Now.ToString("HH:mm:ss");
 
-            if (DateTime.Now.TimeOfDay.Minutes > minutes)
+            if ((DateTime.Now.TimeOfDay.Minutes != minutes) && (DateTime.Now.DayOfWeek != DayOfWeek.Saturday) && (DateTime.Now.DayOfWeek != DayOfWeek.Sunday))
             {
                 minutes = DateTime.Now.TimeOfDay.Minutes;
 

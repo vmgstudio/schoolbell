@@ -27,8 +27,18 @@ namespace schoolbelll
         string becsengohangfajl = "";
         string kicsengohangfajl = "";
         string jelzohangfajl = "";
+        string txtparser;
         bool hiba = false;
-        
+
+
+        bool weekday1;
+        bool weekday2;
+        bool weekday3;
+        bool weekday4;
+        bool weekday5;
+        bool weekday6;
+        bool weekday7;
+
         public AddSchedule()
         {
             InitializeComponent();
@@ -177,6 +187,10 @@ namespace schoolbelll
                     jelzohangfajl = dlg.FileName;
 
                 }
+                if(id == 4)
+                {
+                    txtparser = dlg.FileName;
+                }
             }
 
         }
@@ -195,6 +209,68 @@ namespace schoolbelll
         {
             openFileDialog(2);
         }
+        /*
+        private void importBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".mp3";
+            dlg.Filter = "Hangfájlok (.mp3, .wav)|*.mp3;*.wav";
 
+
+            Nullable<bool> result = dlg.ShowDialog();
+
+            StreamReader file = File.OpenText(dlg.FileName);
+        }
+
+        private void weekday_1_Click(object sender, RoutedEventArgs e)
+        {
+            BrushConverter converter = new BrushConverter();
+            weekday_1.Background = (Brush)converter.ConvertFromString("#FFFFC500");
+        }
+
+        private void weekday_2_Click(object sender, RoutedEventArgs e)
+        {
+            BrushConverter converter = new BrushConverter();
+            weekday_2.Background = (Brush)converter.ConvertFromString("#FFFFC500");
+        }
+
+        private void weekday_3_Click(object sender, RoutedEventArgs e)
+        {
+            if (weekday3)
+            {
+                //weekday_3 = true;
+                weekday3 = false;
+            } else
+            {
+                BrushConverter converter = new BrushConverter();
+                weekday_3.Background = (Brush)converter.ConvertFromString("#FFFFC500");
+                weekday3 = true;
+            }
+            
+        }
+
+        private void weekday_4_Click(object sender, RoutedEventArgs e)
+        {
+            BrushConverter converter = new BrushConverter();
+            weekday_4.Background = (Brush)converter.ConvertFromString("#FFFFC500");
+        }
+
+        private void weekday_5_Click(object sender, RoutedEventArgs e)
+        {
+            BrushConverter converter = new BrushConverter();
+            weekday_5.Background = (Brush)converter.ConvertFromString("#FFFFC500");
+        }
+
+        private void weekday_6_Click(object sender, RoutedEventArgs e)
+        {
+            BrushConverter converter = new BrushConverter();
+            weekday_6.Background = (Brush)converter.ConvertFromString("#FFFFC500");
+        }
+
+        private void weekday_7_Click(object sender, RoutedEventArgs e)
+        {
+            BrushConverter converter = new BrushConverter();
+            weekday_7.Background = (Brush)converter.ConvertFromString("#FFFFC500");
+        }*/
     }
 }

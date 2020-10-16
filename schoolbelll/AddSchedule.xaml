@@ -5,16 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:schoolbelll"
         mc:Ignorable="d"
-        Title="Új csengetés beállítása" Height="470.133" Width="400" MinWidth="400" MinHeight="300" ResizeMode="NoResize" Icon="csengo.png" Foreground="White" Background="#FF212121" WindowStyle="ToolWindow" WindowStartupLocation="CenterOwner">
+        Title="Új csengetés beállítása" Height="494.633" Width="400" MinWidth="400" MinHeight="300" ResizeMode="NoResize" Icon="csengo.png" Foreground="White" Background="#FF212121" WindowStyle="ToolWindow" WindowStartupLocation="CenterOwner">
     <StackPanel>
         <StackPanel Margin="8,24,8,8" Orientation="Horizontal" Height="28">
             <Label Content="Csengetés neve" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White"/>
             <TextBox x:Name="elnevezes" HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" Width="281" Cursor="" Background="#FF3A3A3A" Foreground="#FF9E9E9E" SelectionBrush="#FF0063B2"/>
 
         </StackPanel>
-        <Grid Height="374">
-            <Button x:Name="closeBtn" Content="Bezárás" HorizontalAlignment="Left" Margin="295,344,0,0" VerticalAlignment="Top" Width="78" IsCancel="True"/>
-            <Button x:Name="saveBtn" Content="Mentés" HorizontalAlignment="Left" Margin="193,344,0,0" VerticalAlignment="Top" Width="78" IsDefault="True" Click="saveBtn_Click"/>
+        <Grid Height="406">
+            <Button x:Name="closeBtn" Content="Bezárás" HorizontalAlignment="Left" Margin="295,368,0,-14" VerticalAlignment="Top" Width="78" IsCancel="True" VerticalContentAlignment="Center"/>
+            <Button x:Name="saveBtn" Content="Mentés" HorizontalAlignment="Left" Margin="188,368,0,-14" VerticalAlignment="Top" Width="78" IsDefault="True" Click="saveBtn_Click" VerticalContentAlignment="Center"/>
             <Label Content="1. óra" HorizontalAlignment="Left" Margin="22,30,0,0" VerticalAlignment="Top" Foreground="White"/>
             <Label Content="2. óra" HorizontalAlignment="Left" Margin="22,61,0,0" VerticalAlignment="Top" Foreground="White"/>
             <Label Content="3. óra" HorizontalAlignment="Left" Margin="22,92,0,0" VerticalAlignment="Top" Foreground="White"/>
@@ -53,6 +53,147 @@
             <Button x:Name="jelzosoundBtn" Content="Jelző hang" Margin="27,291,0,0" Width="93" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Click="jelzosoundBtn_Click"/>
             <Button x:Name="becsengosoundBtn" Content="Becsengő hang" Margin="155,291,0,0" Width="93" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Click="becsengosoundBtn_Click"/>
             <Button x:Name="kicsengosoundBtn" Content="Kicsengő hang" Margin="280,291,0,0" Width="93" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Click="kicsengosoundBtn_Click"/>
+            <!--Button x:Name="importBtn" Content="+ Adatok importálása" HorizontalAlignment="Left" Margin="27,368,0,-14" VerticalAlignment="Top" Width="132" Height="20" VerticalContentAlignment="Center" Click="importBtn_Click"/>
+            <Button x:Name="weekday_1" Content="Hé" HorizontalAlignment="Center" Margin="27,334,326,0" VerticalAlignment="Top" Width="41" Click="weekday_1_Click" >
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}" Height="20">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="LightGray"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button x:Name="weekday_2" Content="Ke" HorizontalAlignment="Center" Margin="79,334,274,0" VerticalAlignment="Top" Width="41" Click="weekday_2_Click" >
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}" Height="20">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="LightGray"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button x:Name="weekday_3" Content="Sze" HorizontalAlignment="Center" Margin="130,334,224,0" VerticalAlignment="Top" Width="40" Click="weekday_3_Click" >
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}" Height="20">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="LightGray"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button x:Name="weekday_4" Content="Csü" HorizontalAlignment="Center" Margin="180,334,174,0" VerticalAlignment="Top" Width="40" Click="weekday_4_Click" >
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}" Height="20">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="LightGray"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button x:Name="weekday_5" Content="Pé" HorizontalAlignment="Center" Margin="229,334,123,0" VerticalAlignment="Top" Width="42" Click="weekday_5_Click" >
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}" Height="20">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="LightGray"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button x:Name="weekday_6" Content="Szo" HorizontalAlignment="Center" Margin="280,334,72,0" VerticalAlignment="Top" Width="42" Click="weekday_6_Click" >
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}" Height="20">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="LightGray"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button x:Name="weekday_7" Content="Vas" HorizontalAlignment="Center" Margin="331,334,21,0" VerticalAlignment="Top" Width="42" Click="weekday_7_Click">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}" Height="20">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="LightGray"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>-->
         </Grid>
     </StackPanel>
 </Window>
